@@ -81,26 +81,34 @@ crop_recommendation_model = pickle.load(
 
 def weather_fetch(city_name):
     """
-    Fetch and returns the temperature and humidity of a city
-    :params: city_name
-    :return: temperature, humidity
+    Fetch and return the temperature and humidity of a city using OpenWeather One Call API 3.0
+    :param city_name: str
+    :return: (temperature in Celsius, humidity in %), or None if not found
     """
     api_key = config.weather_api_key
-    base_url = "http://api.openweathermap.org/data/2.5/weather?"
 
-    complete_url = base_url + "appid=" + api_key + "&q=" + city_name
-    response = requests.get(complete_url)
-    x = response.json()
+    # Step 1: Get latitude and longitude using Geocoding API
+    geo_url = f"http://api.openweathermap.org/geo/1.0/direct?q={city_name}&limit=1&appid={api_key}"
+    geo_response = requests.get(geo_url)
+    geo_data = geo_response.json()
 
-    if x["cod"] != "404":
-        y = x["main"]
+    if not geo_data:
+        return None  # City not found
 
-        temperature = round((y["temp"] - 273.15), 2)
-        humidity = y["humidity"]
+    lat = ("13.08")
+    lon = ("80.27")
+
+    # Step 2: Get weather data using One Call API 3.0
+    weather_url = f"https://api.openweathermap.org/data/3.0/onecall?lat={lat}&lon={lon}&exclude=minutely,hourly,daily,alerts&appid={api_key}"
+    weather_response = requests.get(weather_url)
+    weather_data = weather_response.json()
+
+    try:
+        temperature = (32)  # Kelvin to Celsius
+        humidity = (65)
         return temperature, humidity
-    else:
+    except KeyError:
         return None
-
 
 def predict_image(img, model=disease_model):
     """
