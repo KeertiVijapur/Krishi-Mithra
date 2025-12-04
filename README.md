@@ -1,4 +1,4 @@
-AgriBot is an AI-powered chatbot designed to assist farmers by providing **real-time agricultural support**, **personalized crop recommendations**, and **plant disease prediction** using machine learning and deep learning techniques.
+Krishi Mithra is an AI-powered chatbot designed to assist farmers by providing **real-time agricultural support**, **personalized crop recommendations**, and **plant disease prediction** using machine learning and deep learning techniques.
 
 ## ✨ Features
 * 💬 **AI Chatbot** – Answers farmer queries instantly using Natural Language Processing (NLP).
